@@ -141,7 +141,7 @@ export const BookUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="note"
                 type="text"
                 validate={{
-                  maxLength: { value: 200, message: translate('entity.validation.maxlength', { max: 200 }) },
+                  maxLength: { value: 20000, message: translate('entity.validation.maxlength', { max: 20000 }) },
                 }}
               />
               <ValidatedBlobField

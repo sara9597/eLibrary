@@ -39,8 +39,8 @@ public class Book implements Serializable {
     @Column(name = "year")
     private Integer year;
 
-    @Size(max = 200)
-    @Column(name = "note", length = 200)
+    @Size(max = 20000)
+    @Column(name = "note", length = 20000)
     private String note;
 
     @Lob

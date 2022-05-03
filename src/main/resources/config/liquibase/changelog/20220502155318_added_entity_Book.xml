@@ -23,7 +23,7 @@
             <column name="year" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="note" type="varchar(200)">
+            <column name="note" type="varchar(20000)">
                 <constraints nullable="true" />
             </column>
             <column name="image" type="longblob">

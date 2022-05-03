@@ -25,7 +25,7 @@ public class BookDTO implements Serializable {
     @Max(value = 2022)
     private Integer year;
 
-    @Size(max = 200)
+    @Size(max = 20000)
     private String note;
 
     @Lob

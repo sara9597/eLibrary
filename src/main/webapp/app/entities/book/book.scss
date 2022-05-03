@@ -84,7 +84,7 @@ a {
 }
 
 .edit {
-  background-color: #5BF57F;
+  background-color: #343533;;
   margin-right: 0.5rem;
   border-radius: 5px !important;
 }
@@ -92,4 +92,11 @@ a {
   background-color: #f57f5b;
 
   border-radius: 5px !important;
+}
+#book-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-left: 2.7rem;
+padding-right: 2.7rem;
 }

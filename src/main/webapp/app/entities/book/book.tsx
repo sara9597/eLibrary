@@ -170,7 +170,6 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
               </div>
             )}
       </div>
-      ) )
       {totalItems ? (
         <div className={bookList && bookList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
