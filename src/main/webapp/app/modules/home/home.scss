@@ -1,0 +1,73 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+.hipster {
+  display: inline-block;
+  width: 100%;
+  height: 497px;
+  background: url('../../../content/images/jhipster_family_member_3.svg') no-repeat center top;
+  background-size: contain;
+}
+.jh-navbar {
+  background-color: #2b373e;
+  background-image: url('../../../content/images/library_wallpaper.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 0;
+  height: 666px;
+  background-position-x: right;
+  position: relative;
+  background-attachment: fixed;
+  .profile-image {
+    margin: -10px 0px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+}
+.libraryTitle:hover {
+  background: rgba(51, 51, 51, 0.6);
+}
+
+.libraryTitle {
+  background: rgba(51, 51, 51, 0.5);
+  display: flex;
+  color: white;
+  cursor: pointer;
+  h1 {
+    color: white;
+  }
+
+  justify-content: center;
+  margin-top: 4vw;
+}
+.libraryTitle:before,
+.libraryTitle:after {
+  content: '';
+  margin: auto 1em;
+  border-bottom: solid 1px;
+  flex: 1;
+}
+h1 {
+  position: relative;
+  padding: 0.25em 1em;
+  overflow: hidden;
+  background: linear-gradient(white, white) no-repeat top center, linear-gradient(white, white) no-repeat bottom center;
+  background-size: calc(100% - 1.7em) 1px;
+}
+h1:before,
+h1:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: solid 1px;
+  border-top: none;
+  border-bottom: none;
+  transform: skew(45deg);
+}
+h1:after {
+  transform: skew(-45deg);
+}
