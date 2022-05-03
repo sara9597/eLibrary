@@ -3,7 +3,8 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 import { Translate, openFile, byteSize } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 import { getEntity } from './book.reducer';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -14,6 +15,8 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
   useEffect(() => {
     dispatch(getEntity(props.match.params.id));
   }, []);
+
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   const bookEntity = useAppSelector(state => state.book.entity);
   return (
@@ -97,12 +100,14 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/book/${bookEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
+        {isAdmin && (
+          <Button tag={Link} to={`/book/${bookEntity.id}/edit`} replace color="primary">
+            <FontAwesomeIcon icon="pencil-alt" />{' '}
+            <span className="d-none d-md-inline">
+              <Translate contentKey="entity.action.edit">Edit</Translate>
+            </span>
+          </Button>
+        )}
       </Col>
     </Row>
   );
