@@ -105,21 +105,21 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
     </>
   );
   return (
-    <div>
+    <div className="bookPage">
       <h2 id="book-heading" data-cy="BookHeading">
         <Translate contentKey="librarApp.book.home.title">Books</Translate>
       </h2>
       <div className="d-flex bookHeaderComponents">
-        <div className='d-flex inputSort'>
+        <div className="d-flex inputSort">
           <Input
             type="search"
-            placeholder="Search..."
-            className="form-control me-2"
+            placeholder="Search books..."
+            className="form-control me-2 booksSearch"
             defaultValue={filter}
             onChange={e => updateFilter(e.target.value)}
             style={{ width: '20vw' }}
           />
-          <NavDropdown className='dropdownMenu' icon="book" name="Sort By" id="sort-menu" data-cy="sortMenu">
+          <NavDropdown className="dropdownMenu" icon="book" name="Sort By" id="sort-menu" data-cy="sortMenu">
             {sortMenuItems()}
           </NavDropdown>
         </div>

@@ -11,6 +11,7 @@
   position: relative;
   transition: all ease-in-out 0.3s;
   cursor: pointer;
+  border: 2px solid #2c2d2b;
 }
 
 .catalog__item__img {
@@ -99,7 +100,7 @@ a {
 #book-heading {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  padding-top: 2rem;
   padding-left: 2.7rem;
   padding-right: 2.7rem;
 }
@@ -186,10 +187,22 @@ a {
   flex-wrap: inherit;
   padding-left: 2.6rem;
 }
-.dropdownMenu{
+.dropdownMenu {
   text-decoration: none;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
+}
+
+.bookPage {
+  background-color: rgb(250, 233, 201);
+}
+
+.booksSearch {
+  background-color: white;
+}
+
+.nav-link {
+  color: #2c2d2b;
 }
