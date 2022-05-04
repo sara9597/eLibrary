@@ -84,7 +84,7 @@ a {
 }
 
 .edit {
-  background-color: #343533;;
+  background-color: #343533;
   margin-right: 0.5rem;
   border-radius: 5px !important;
 }
@@ -98,5 +98,73 @@ a {
   justify-content: space-between;
   margin-top: 2rem;
   padding-left: 2.7rem;
-padding-right: 2.7rem;
+  padding-right: 2.7rem;
+}
+
+.bookDetailContainer {
+  padding: 40px 20px;
+  //padding: 10rem 5rem;
+  animation: 1s ease 0s 1 normal none running animateMovieInfo;
+
+  // background: rgba(0, 0, 0, 0) repeat scroll center center / cover;
+}
+.detailCard {
+  display: flex;
+  max-width: 1280px;
+  margin: 0px auto;
+  background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+  border-radius: 20px;
+}
+.imageContainer {
+  width: 50%;
+  img {
+    width: 100%;
+    max-width: 720px;
+    transition: all 0.3s ease 0s;
+    object-fit: cover;
+    border-radius: 20px;
+    animation: 0.5s ease 0s 1 normal none running animateThumb;
+  }
+}
+.imageContainer:hover {
+  opacity: 0.8;
+}
+.detailContainer {
+  display: grid;
+  justify-items: end;
+  width: 100%;
+  padding: 20px 40px;
+  color: white;
+  overflow: hidden;
+  align-content: space-between;
+}
+.bookGenres {
+  display: flex;
+  -moz-box-pack: start;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding-left: 2.5rem;
+  h3 {
+    width: fit-content;
+    border-bottom: 1px solid white;
+  }
+}
+.genres {
+  span {
+    display: flex;
+    -moz-box-align: center;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    width: 90px;
+    height: 35px;
+    // background: rgba(39, 24, 24, 0.574) none repeat scroll 0% 0%;
+    color: rgb(255, 255, 255);
+    font-weight: 800;
+    border-radius: 20%;
+  }
+}
+
+.bookButtons {
+  height: fit-content;
 }

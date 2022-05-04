@@ -20,96 +20,53 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
 
   const bookEntity = useAppSelector(state => state.book.entity);
   return (
-    <Row className="justify-content-center">
-      <Col md="8">
-        <h2 data-cy="bookDetailsHeading">
-          <Translate contentKey="librarApp.book.detail.title">Book</Translate>
-        </h2>
-        <dl className="jh-entity-details">
-          <dt className="mb-3">
-            <span id="id">
-              <Translate contentKey="global.field.id">ID</Translate>
-            </span>
-          </dt>
-          <dd className="form-control">{bookEntity.id}</dd>
-          <dt className="mb-3">
-            <span className="form-label" id="isbn">
-              <Translate contentKey="librarApp.book.isbn">Isbn</Translate>
-            </span>
-          </dt>
-          <dd className="form-control">{bookEntity.isbn}</dd>
-          <dt className="mb-3">
-            <span className="form-label" id="title">
-              <Translate contentKey="librarApp.book.title">Title</Translate>
-            </span>
-          </dt>
-          <dd className="form-control">{bookEntity.title}</dd>
-          <dt className="mb-3">
-            <span className="form-label" id="year">
-              <Translate contentKey="librarApp.book.year">Year</Translate>
-            </span>
-          </dt>
-          <dd className="form-control">{bookEntity.year}</dd>
-          <dt className="mb-3">
-            <span className="form-label" id="note">
-              <Translate contentKey="librarApp.book.note">Note</Translate>
-            </span>
-          </dt>
-          <dd className="form-control">{bookEntity.note}</dd>
-          <dt className="mb-3">
-            <span className="form-label" id="image">
-              <Translate contentKey="librarApp.book.image">Image</Translate>
-            </span>
-          </dt>
-          <dd className="form-control">
-            {bookEntity.image ? (
-              <div>
-                {bookEntity.imageContentType ? (
-                  <a onClick={openFile(bookEntity.imageContentType, bookEntity.image)}>
-                    <img src={`data:${bookEntity.imageContentType};base64,${bookEntity.image}`} style={{ maxHeight: '30px' }} />
-                  </a>
-                ) : null}
-                <span>
-                  {bookEntity.imageContentType}, {byteSize(bookEntity.image)}
-                </span>
+    <div
+      className="bookDetailContainer"
+      style={{ background: `url(data:${bookEntity.imageContentType};base64,${bookEntity.image} ) repeat scroll center center / cover` }}
+    >
+      <div className="detailCard">
+        <div className="imageContainer">
+          <img src={`data:${bookEntity.imageContentType};base64,${bookEntity.image}`} />
+        </div>
+        <div className="detailContainer">
+          <div className="aboutBook">
+            <h1>{bookEntity.title} ({bookEntity.year})</h1>
+            <h3 style={{ paddingBottom: '2rem', paddingLeft: '2.5rem' }}>{bookEntity.author ? bookEntity.author.fullname : ''}</h3>
+            <p style={{ paddingLeft: '2.5rem' }}>{bookEntity.note}</p>
+            <div className="bookGenres">
+              <h3>Genres</h3>
+              <div className="genres">
+                {bookEntity.genres
+                  ? bookEntity.genres.map((val, i) => (
+                      <span key={val.id}>
+                        <a>{val.name}</a>
+                        {bookEntity.genres && i === bookEntity.genres.length - 1 ? '' : ', '}
+                      </span>
+                    ))
+                  : null}
               </div>
-            ) : null}
-          </dd>
-          <dt className="mb-3">
-            <Translate contentKey="librarApp.book.genres">Genres</Translate>
-          </dt>
-          <dd className="form-control">
-            {bookEntity.genres
-              ? bookEntity.genres.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.name}</a>
-                    {bookEntity.genres && i === bookEntity.genres.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt className="mb-3">
-            <Translate contentKey="librarApp.book.author">Author</Translate>
-          </dt>
-          <dd className="form-control">{bookEntity.author ? bookEntity.author.fullname : ''}</dd>
-        </dl>
-        <Button tag={Link} to="/book" replace color="info" data-cy="entityDetailsBackButton">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        {isAdmin && (
-          <Button tag={Link} to={`/book/${bookEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
-            <span className="d-none d-md-inline">
-              <Translate contentKey="entity.action.edit">Edit</Translate>
-            </span>
-          </Button>
-        )}
-      </Col>
-    </Row>
+            </div>
+          </div>
+          <div className="btn btn-group bookButtons">
+            <Button tag={Link} to="/book" replace color="info" data-cy="entityDetailsBackButton">
+              <FontAwesomeIcon icon="arrow-left" />{' '}
+              <span className="d-none d-md-inline">
+                <Translate contentKey="entity.action.back">Back</Translate>
+              </span>
+            </Button>
+            &nbsp;
+            {isAdmin && (
+              <Button tag={Link} to={`/book/${bookEntity.id}/edit`} replace color="primary">
+                <FontAwesomeIcon icon="pencil-alt" />{' '}
+                <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.edit">Edit</Translate>
+                </span>
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
