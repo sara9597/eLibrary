@@ -14,10 +14,13 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { LendingStatus } from 'app/shared/model/enumerations/lending-status.model';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 export const UserBookLendingUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
-
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
+const account = useAppSelector(state => state.authentication.account);
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const libraryUsers = useAppSelector(state => state.libraryUser.entities);
@@ -71,6 +74,7 @@ export const UserBookLendingUpdate = (props: RouteComponentProps<{ id: string }>
       ? {
           loantime: displayDefaultDateTime(),
           returntime: displayDefaultDateTime(),
+          user:!isAdmin?account.login:null
         }
       : {
           status: 'LENDED',
@@ -83,6 +87,7 @@ export const UserBookLendingUpdate = (props: RouteComponentProps<{ id: string }>
 
   return (
     <div>
+     { /* eslint-disable no-console */ console.log(defaultValues().user) /* eslint-enable no-console */}
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="librarApp.userBookLending.home.createOrEditLabel" data-cy="UserBookLendingCreateUpdateHeading">
@@ -117,27 +122,31 @@ export const UserBookLendingUpdate = (props: RouteComponentProps<{ id: string }>
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
-              <ValidatedField
-                label={translate('librarApp.userBookLending.returntime')}
-                id="user-book-lending-returntime"
-                name="returntime"
-                data-cy="returntime"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
-              <ValidatedField
-                label={translate('librarApp.userBookLending.status')}
-                id="user-book-lending-status"
-                name="status"
-                data-cy="status"
-                type="select"
-              >
-                {lendingStatusValues.map(lendingStatus => (
-                  <option value={lendingStatus} key={lendingStatus}>
-                    {translate('librarApp.LendingStatus.' + lendingStatus)}
-                  </option>
-                ))}
-              </ValidatedField>
+              {isAdmin && (
+                <ValidatedField
+                  label={translate('librarApp.userBookLending.returntime')}
+                  id="user-book-lending-returntime"
+                  name="returntime"
+                  data-cy="returntime"
+                  type="datetime-local"
+                  placeholder="YYYY-MM-DD HH:mm"
+                />
+              )}
+              {isAdmin && (
+                <ValidatedField
+                  label={translate('librarApp.userBookLending.status')}
+                  id="user-book-lending-status"
+                  name="status"
+                  data-cy="status"
+                  type="select"
+                >
+                  {lendingStatusValues.map(lendingStatus => (
+                    <option value={lendingStatus} key={lendingStatus}>
+                      {translate('librarApp.LendingStatus.' + lendingStatus)}
+                    </option>
+                  ))}
+                </ValidatedField>
+              )}
               <ValidatedField
                 label={translate('librarApp.userBookLending.note')}
                 id="user-book-lending-note"

@@ -63,6 +63,9 @@
 .catalog__item__footer__name {
   font-weight: bold;
   font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 a {
   text-decoration: none !important;
@@ -167,4 +170,26 @@ a {
 
 .bookButtons {
   height: fit-content;
+}
+
+.editDelete {
+  width: fit-content;
+}
+.bookHeaderComponents {
+  justify-content: space-between;
+}
+.refreshCreate {
+  height: fit-content;
+  padding-right: 2.6rem;
+}
+.inputSort {
+  flex-wrap: inherit;
+  padding-left: 2.6rem;
+}
+.dropdownMenu{
+  text-decoration: none;
+}
+
+li {
+    list-style-type: none;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './book.scss';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Table, Input } from 'reactstrap';
+import { Button, Table, Input, DropdownItem } from 'reactstrap';
 import { openFile, byteSize, Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -13,6 +13,8 @@ import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-u
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import { AUTHORITIES } from 'app/config/constants';
+import { NavDropdown } from 'app/shared/layout/menus/menu-components';
+import MenuItem from 'app/shared/layout/menus/menu-item';
 
 export const Book = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -86,11 +88,29 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
   const { match } = props;
   const bookEntity = useAppSelector(state => state.book.entity);
 
+  const sortMenuItems = () => (
+    <>
+      <DropdownItem onClick={sort('title')}>
+        <FontAwesomeIcon icon="sort" fixedWidth />
+        Title
+      </DropdownItem>
+      <DropdownItem onClick={sort('author.fullname')}>
+        <FontAwesomeIcon icon="sort" fixedWidth />
+        Author
+      </DropdownItem>
+      <DropdownItem onClick={sort('year')}>
+        <FontAwesomeIcon icon="sort" fixedWidth />
+        Year
+      </DropdownItem>
+    </>
+  );
   return (
     <div>
       <h2 id="book-heading" data-cy="BookHeading">
         <Translate contentKey="librarApp.book.home.title">Books</Translate>
-        <div className="d-flex justify-content-end">
+      </h2>
+      <div className="d-flex bookHeaderComponents">
+        <div className='d-flex inputSort'>
           <Input
             type="search"
             placeholder="Search..."
@@ -99,6 +119,11 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
             onChange={e => updateFilter(e.target.value)}
             style={{ width: '20vw' }}
           />
+          <NavDropdown className='dropdownMenu' icon="book" name="Sort By" id="sort-menu" data-cy="sortMenu">
+            {sortMenuItems()}
+          </NavDropdown>
+        </div>
+        <div className="d-flex justify-content-end refreshCreate">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="librarApp.book.home.refreshListLabel">Refresh List</Translate>
@@ -109,7 +134,7 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
             <Translate contentKey="librarApp.book.home.createLabel">Create new Book</Translate>
           </Link>
         </div>
-      </h2>
+      </div>
       <div className="catalogContainer">
         {bookList && bookList.length > 0
           ? bookList.map(
@@ -127,7 +152,9 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
                       </div>
                       <div className="catalog__item__footer">
                         <div className="catalog__item__footer__name">
-                          {book.title} ({book.year})
+                          <span>
+                            {book.title} ({book.year})
+                          </span>
                           {isAdmin && (
                             <div className="btn-group flex-btn-group-container editDelete">
                               <Button
