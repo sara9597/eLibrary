@@ -8,6 +8,10 @@ import { AUTHORITIES } from 'app/config/constants';
 import { getEntity } from './book.reducer';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import UserBookLendingUpdate from '../user-book-lending/user-book-lending-update';
+import { createEntity } from '../user-book-lending/user-book-lending.reducer';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { LendingStatus } from 'app/shared/model/enumerations/lending-status.model';
 
 export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
@@ -17,8 +21,28 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
   }, []);
 
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
-
+  const userBookLendingEntity = useAppSelector(state => state.userBookLending.entity);
   const bookEntity = useAppSelector(state => state.book.entity);
+  const userEntiy = useAppSelector(state =>
+    state.libraryUser.entities.filter(
+      user => user.fullname === state.authentication.account.firstName + state.authentication.account.lastName
+    )
+  );
+  const entity = {
+    loantime: '2022-05-05T17:09:01Z',
+    returntime: '2022-05-05T17:09:01Z',
+    status: 'LENDED',
+    user: {
+      id: userEntiy[0].id,
+    },
+    book: {
+      id: bookEntity.id,
+    },
+  };
+  const lendBook = () => {
+    /* eslint-disable no-console */ console.log(userEntiy); /* eslint-enable no-console */
+    dispatch(createEntity(entity));
+  };
   return (
     <div
       className="bookDetailContainer"
@@ -65,7 +89,7 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
                 </span>
               </Button>
             ) : (
-              <Button tag={Link} to={'/user-book-lending/new'} replace color="primary">
+              <Button tag={Link} to={'/user-book-lending/new'} replace color="primary" onClick={() => lendBook()}>
                 <FontAwesomeIcon icon="book" /> <span className="d-none d-md-inline">Lend</span>
               </Button>
             )}
