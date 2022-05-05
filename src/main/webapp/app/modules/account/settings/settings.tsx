@@ -14,7 +14,7 @@ export const SettingsPage = () => {
   const successMessage = useAppSelector(state => state.settings.successMessage);
 
   useEffect(() => {
-    dispatch(getSession());
+    dispatch(getSession()); 
     return () => {
       dispatch(reset());
     };

@@ -30,7 +30,9 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
         </div>
         <div className="detailContainer">
           <div className="aboutBook">
-            <h1>{bookEntity.title} ({bookEntity.year})</h1>
+            <h1>
+              {bookEntity.title} ({bookEntity.year})
+            </h1>
             <h3 style={{ paddingBottom: '2rem', paddingLeft: '2.5rem' }}>{bookEntity.author ? bookEntity.author.fullname : ''}</h3>
             <p style={{ paddingLeft: '2.5rem' }}>{bookEntity.note}</p>
             <div className="bookGenres">
@@ -55,12 +57,16 @@ export const BookDetail = (props: RouteComponentProps<{ id: string }>) => {
               </span>
             </Button>
             &nbsp;
-            {isAdmin && (
+            {isAdmin ? (
               <Button tag={Link} to={`/book/${bookEntity.id}/edit`} replace color="primary">
                 <FontAwesomeIcon icon="pencil-alt" />{' '}
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.edit">Edit</Translate>
                 </span>
+              </Button>
+            ) : (
+              <Button tag={Link} to={'/user-book-lending/new'} replace color="primary">
+                <FontAwesomeIcon icon="book" /> <span className="d-none d-md-inline">Lend</span>
               </Button>
             )}
           </div>

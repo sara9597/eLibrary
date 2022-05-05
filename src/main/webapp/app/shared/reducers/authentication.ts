@@ -3,8 +3,10 @@ import { Storage } from 'react-jhipster';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { serializeAxiosError } from './reducer.utils';
 
-import { AppThunk } from 'app/config/store';
+import { AppThunk, } from 'app/config/store';
 import { setLocale } from 'app/shared/reducers/locale';
+import { createEntity } from 'app/entities/library-user/library-user.reducer';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from '../util/date-utils';
 
 const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 
@@ -29,6 +31,17 @@ export const getSession = (): AppThunk => async (dispatch, getState) => {
   await dispatch(getAccount());
 
   const { account } = getState().authentication;
+
+  const  entities  = getState().libraryUser.entities;
+  dispatch(
+    createEntity({
+      fullname: account.firstName + account.lastName,
+      birthdate: '1997-09-05',
+      email: account.email + '.com',
+      memeberdate: displayDefaultDateTime() + ':01' + 'Z',
+      mobile: '095' + Math.floor(1000000 + Math.random() * 9000000),
+    })
+  );
   if (account && account.langKey) {
     const langKey = Storage.session.get('locale', account.langKey);
     dispatch(setLocale(langKey));
@@ -67,6 +80,7 @@ export const login: (username: string, password: string, rememberMe?: boolean) =
         Storage.session.set(AUTH_TOKEN_KEY, jwt);
       }
     }
+
     dispatch(getSession());
   };
 

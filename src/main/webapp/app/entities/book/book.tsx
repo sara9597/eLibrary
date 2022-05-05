@@ -200,7 +200,11 @@ export const Book = (props: RouteComponentProps<{ url: string }>) => {
       {totalItems ? (
         <div className={bookList && bookList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
+            <JhiItemCount 
+            page={paginationState.activePage} 
+            total={totalItems} 
+            itemsPerPage={paginationState.itemsPerPage} 
+            i18nEnabled />
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination

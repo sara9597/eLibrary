@@ -20,7 +20,7 @@ import { AUTHORITIES } from 'app/config/constants';
 export const UserBookLendingUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
-const account = useAppSelector(state => state.authentication.account);
+  const account = useAppSelector(state => state.authentication.account);
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
   const libraryUsers = useAppSelector(state => state.libraryUser.entities);
@@ -74,7 +74,7 @@ const account = useAppSelector(state => state.authentication.account);
       ? {
           loantime: displayDefaultDateTime(),
           returntime: displayDefaultDateTime(),
-          user:!isAdmin?account.login:null
+          user: !isAdmin ? account.login : null,
         }
       : {
           status: 'LENDED',
@@ -87,7 +87,6 @@ const account = useAppSelector(state => state.authentication.account);
 
   return (
     <div>
-     { /* eslint-disable no-console */ console.log(defaultValues().user) /* eslint-enable no-console */}
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="librarApp.userBookLending.home.createOrEditLabel" data-cy="UserBookLendingCreateUpdateHeading">
