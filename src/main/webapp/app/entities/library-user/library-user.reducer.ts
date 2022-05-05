@@ -5,7 +5,6 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
 import { ILibraryUser, defaultValue } from 'app/shared/model/library-user.model';
 
-
 const initialState: EntityState<ILibraryUser> = {
   loading: false,
   errorMessage: null,
@@ -37,11 +36,9 @@ export const getEntity = createAsyncThunk(
 export const createEntity = createAsyncThunk(
   'libraryUser/create_entity',
   async (entity: ILibraryUser, thunkAPI) => {
-    const email = thunkAPI.getState()&&thunkAPI.getState().authentication.account.email+'.com';
-if(email!==entity.email)
-    {const result = await axios.post<ILibraryUser>(apiUrl, cleanEntity(entity));
+    const result = await axios.post<ILibraryUser>(apiUrl, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
-    return result;}
+    return result;
   },
   { serializeError: serializeAxiosError }
 );

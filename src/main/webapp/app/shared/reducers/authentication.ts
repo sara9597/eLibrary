@@ -3,9 +3,9 @@ import { Storage } from 'react-jhipster';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { serializeAxiosError } from './reducer.utils';
 
-import { AppThunk, } from 'app/config/store';
+import { AppThunk } from 'app/config/store';
 import { setLocale } from 'app/shared/reducers/locale';
-import { createEntity } from 'app/entities/library-user/library-user.reducer';
+import { createEntity, getEntities } from 'app/entities/library-user/library-user.reducer';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from '../util/date-utils';
 
 const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
@@ -32,20 +32,27 @@ export const getSession = (): AppThunk => async (dispatch, getState) => {
 
   const { account } = getState().authentication;
 
-  const  entities  = getState().libraryUser.entities;
-  dispatch(
-    createEntity({
-      fullname: account.firstName + account.lastName,
-      birthdate: '1997-09-05',
-      email: account.email + '.com',
-      memeberdate: displayDefaultDateTime() + ':01' + 'Z',
-      mobile: '095' + Math.floor(1000000 + Math.random() * 9000000),
-    })
-  );
   if (account && account.langKey) {
     const langKey = Storage.session.get('locale', account.langKey);
     dispatch(setLocale(langKey));
   }
+  dispatch(getEntities({}));
+  const entities = getState().libraryUser.entities && getState().libraryUser.entities;
+  let isNew = true;
+  if (entities)
+    for (let i = 0; i < entities.length; i++) {
+      if (entities[i].email === account.email + '.com') isNew = false;
+    }
+  isNew &&
+    dispatch(
+      createEntity({
+        fullname: account.firstName + account.lastName,
+        birthdate: '1997-09-05',
+        email: account.email + '.com',
+        memeberdate: displayDefaultDateTime() + ':01' + 'Z',
+        mobile: '095' + Math.floor(1000000 + Math.random() * 9000000),
+      })
+    );
 };
 
 export const getAccount = createAsyncThunk('authentication/get_account', async () => axios.get<any>('api/account'), {
